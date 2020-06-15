@@ -1,0 +1,5 @@
+{
+    "date_of_birth": "When was [X] born?", 
+    "place_of_birth": "Where was [X] born?", 
+    "place_of_death": "Where did [X] die?"
+}
