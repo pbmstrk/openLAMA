@@ -22,3 +22,5 @@ wget -c --directory-prefix=$SQUADprefix $SQUADpath
 # make directories to store openLAMA
 mkdir -p ./openLAMA
 mkdir -p ./openLAMA/SQUAD
+mkdir -p ./openLAMA/Google_RE
+mkdir -p ./openLAMA/trex
