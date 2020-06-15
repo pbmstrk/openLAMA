@@ -8,7 +8,7 @@ The LAMA probe is based on various sources:
 
 1. Google-RE (specifically, the relations "place-of-birth", "date-of-birth" and "place-of-death"
 2. T-REx 
-3. ConceptNet
+3. ConceptNet (not implemented yet)
 4. Squad
 
 To convert to natural questions, for Squad the original questions from the Squad dataset are taken which correspond to 
