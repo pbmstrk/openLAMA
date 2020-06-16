@@ -6,6 +6,11 @@ import os.path
 
 def formatLAMAsquad(path):
 
+    """
+    Opens LAMA Squad file and returns dictionary with 
+    questions, targets and ids.
+    """
+
     cloze_questions = []
     targets = []
     ids = []
@@ -19,6 +24,12 @@ def formatLAMAsquad(path):
     return {"cq": cloze_questions, "targets": targets, "ids": ids}
 
 def formatsquad(path):
+
+    """
+    Retrieves squad data and returns a dictionary with ids linked to 
+    questions
+    """
+
     squad_questions = []
     squad_ids = []
 
@@ -33,6 +44,10 @@ def formatsquad(path):
     return {squad_ids[i]: squad_questions[i] for i in range(len(squad_ids))} 
 
 def openlama_squad(lamapath, squadpath, squad_outputh_path):
+
+    """
+    Uses ids to match cloze questions to natural questions
+    """
 
     if os.path.isfile(squad_outputh_path):
         logging.info("%s exists, skipping processing" % squad_outputh_path)
@@ -53,6 +68,8 @@ def openlama_squad(lamapath, squadpath, squad_outputh_path):
 
 def get_triples(path, relation):
 
+    """Retrieves triples from file"""
+
     triples = []
 
     with jsonlines.open(path) as reader:
@@ -64,6 +81,10 @@ def get_triples(path, relation):
     return triples
 
 def openlama_fill_template(path, output_path, relation, template):
+
+    """
+    Using template create natural questions for a each triple
+    """
 
     if os.path.isfile(output_path):
         logging.info("%s exists, skipping processing" % output_path)
@@ -85,9 +106,8 @@ def openlama_fill_template(path, output_path, relation, template):
             json.dump(data, outfile)
             outfile.write('\n')
 
+def main():
 
-if __name__ == "__main__":
-    
     set_logger("convert.log")
 
     logging.info("Processing LAMA Squad dataset")
@@ -108,10 +128,16 @@ if __name__ == "__main__":
                 "P136", "P138", "P140", "P159", "P176", "P264", "P276", "P279", "P361", "P364", "P407", 
                 "P413", "P449", "P495", "P740", "P1376"]
 
+    logging.info("Processing LAMA T-REx dataset")
     for relation in relations:
         filepath = "data/LAMA/TREX/" + relation + ".jsonl"
         outputpath = "openLAMA/trex/" + relation + ".txt"
         openlama_fill_template(filepath, outputpath, relation, trex_template)
+
+
+if __name__ == "__main__":
+    
+    main()
     
 
 
