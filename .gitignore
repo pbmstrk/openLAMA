@@ -7,3 +7,4 @@ data/
 openLAMA/
 __pycache__
 *.DS_Store
+results.json
