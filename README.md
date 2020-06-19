@@ -6,7 +6,7 @@ Code to convert the cloze questions of the [LAMA dataset](https://github.com/fac
 
 The LAMA probe is based on various sources:
 
-1. Google-RE (specifically, the relations "place-of-birth", "date-of-birth" and "place-of-death"
+1. Google-RE (specifically, the relations `birth-place`, `birth-date` and `death-place`)
 2. T-REx 
 3. ConceptNet (not implemented yet)
 4. Squad
