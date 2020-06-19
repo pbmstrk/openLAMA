@@ -59,7 +59,7 @@ def openlama_squad(lamapath, squadpath, squad_outputh_path):
 
     questions = [squaddict[lamadict["ids"][i][:-2]] for i in range(len(lamadict["ids"]))]
 
-    with open(squad_outputh_path, 'a') as outfile:
+    with open(squad_outputh_path, 'w') as outfile:
         for i in range(len(questions)):
             data = {"question": questions[i], "answer": [targets[i]]}
             json.dump(data, outfile)
@@ -100,7 +100,7 @@ def openlama_fill_template(path, output_path, relation, template):
         questions.append(template[relation].replace("[X]", sub))
         answers.append(obj)
 
-    with open(output_path, 'a') as outfile:
+    with open(output_path, 'w') as outfile:
         for i in range(len(questions)):
             data = {"question": questions[i], "answer": [answers[i]]}
             json.dump(data, outfile)
@@ -124,9 +124,9 @@ def main():
     with open("templates/trex.json") as JSON:
         trex_template = json.load(JSON)
 
-    relations = ["P17", "P19", "P20", "P27", "P30", "P31", "P36", "P37", "P39", "P103", "P127", "P131", 
-                "P136", "P138", "P140", "P159", "P176", "P264", "P276", "P279", "P361", "P364", "P407", 
-                "P413", "P449", "P495", "P740", "P1376"]
+    (_, _, trexfilenames) = next(os.walk('data/LAMA/TREX'))
+
+    relations = [os.path.splitext(os.path.basename(fname))[0] for fname in trexfilenames]
 
     logging.info("Processing LAMA T-REx dataset")
     for relation in relations:
