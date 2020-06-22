@@ -49,10 +49,6 @@ def openlama_squad(lamapath, squadpath, squad_outputh_path):
     Uses ids to match cloze questions to natural questions
     """
 
-    if os.path.isfile(squad_outputh_path):
-        logging.info("%s exists, skipping processing" % squad_outputh_path)
-        return 
-
     lamadict = formatLAMAsquad(lamapath)
     squaddict = formatsquad(squadpath)
     targets = lamadict["targets"]
@@ -85,10 +81,6 @@ def openlama_fill_template(path, output_path, relation, template):
     """
     Using template create natural questions for a each triple
     """
-
-    if os.path.isfile(output_path):
-        logging.info("%s exists, skipping processing" % output_path)
-        return
 
     triples = get_triples(path, relation)
 

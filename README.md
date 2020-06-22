@@ -26,3 +26,11 @@ template: "What is the capital of [X]?"
 downloaddata.sh
 python convert.py
 ```
+
+The script `downloaddata.sh` downloads the LAMA dataset as well as part of the SQUAD dataset, and creates a folder structure to store the created openLAMA data. `convert.py` uses templates to convert the cloze style questions to natural questions.
+
+The `combine.py` script combines multiple files to make inference using an open-domain QA system easier. `eval.py` can then be used to evaluate the results.
+
+
+
+
