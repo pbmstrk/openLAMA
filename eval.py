@@ -35,8 +35,9 @@ def normalize_answer(s):
 def hits_at_k(preds, ans, k):
     """accepts list of predictions and answers"""
 
-    preds_k = preds[:k]
-
+    preds_k = [normalize_answer(pred) for pred in preds[:k]]
+    ans = [normalize_answer(a) for a in ans]
+   
     any_in = lambda a, b: bool(set(a).intersection(b))
 
     return any_in(preds_k, ans)
@@ -70,14 +71,18 @@ def evaluate(dataset_file, prediction_file, combine_file, k):
     answerlist = partition(answers, combinedata["linenumbers"])
     predlist = partition(predictions, combinedata["linenumbers"])
 
-    for iteration in range(len(answerlist)):
-        ans, preds = answerlist[iteration], predlist[iteration]
-        score = 0
-        for i in range(len(preds)):
-            score += hits_at_k(preds[i], ans[i], k)
-        total = len(preds)
-        hitsk = 100.0 * score / total
-        logging.info({'Data': combinedata["filenames"][iteration], 'Hits@{}'.format(k): hitsk})
+    with open('results_{}.txt'.format(combinedata["dataset"]), 'w') as f:
+        for iteration in range(len(answerlist)):
+            ans, preds = answerlist[iteration], predlist[iteration]
+            score = 0
+            for i in range(len(preds)):
+                score += hits_at_k(preds[i], ans[i], k)
+            total = len(preds)
+            hitsk = 100.0 * score / total
+            logging.info({'Data': combinedata["filenames"][iteration], 'Hits@{}'.format(k): hitsk})
+            res = {'Data': combinedata["filenames"][iteration], 'Hits@{}'.format(k): hitsk}
+            json.dump(res, f)
+            f.write('\n')
 
 if __name__ == "__main__":
     

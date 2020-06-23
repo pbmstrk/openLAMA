@@ -43,7 +43,7 @@ def combine(files_path, output_path):
     basenames = [os.path.splitext(os.path.basename(filename))[0] for filename in filenames]
     cumulative_ln = [int(x) for x in np.cumsum(linenumbers)[:-1]]
 
-    data = {"filenames": basenames, "linenumbers": cumulative_ln}
+    data = {"dataset": os.path.basename(files_path),"filenames": basenames, "linenumbers": cumulative_ln}
 
     with open('combine_data.json', 'w') as fp:
         json.dump(data, fp, indent=4)
