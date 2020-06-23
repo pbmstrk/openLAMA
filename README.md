@@ -32,5 +32,16 @@ The script `downloaddata.sh` downloads the LAMA dataset as well as part of the S
 The `combine.py` script combines multiple files to make inference using an open-domain QA system easier. `eval.py` can then be used to evaluate the results.
 
 
+## Results (using DrQA)
 
-
+````
+Squad: 28.52
+Google-RE
+- birth-place: 50.63
+- birth-date: 47.78
+- death-place: 47.65
+T-REx
+- 1-1: 43.01
+- N-1: 25.50
+- N-M: 19.41
+```
