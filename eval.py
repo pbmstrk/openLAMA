@@ -12,7 +12,8 @@ parser.add_argument('datasetfile',
 parser.add_argument('predfile',
                     help="path to outputfile, path/to/output.txt")
 parser.add_argument('combinedata')
-
+parser.add_argument('k', type=int,
+                    help="Hits@k")
 
 def normalize_answer(s):
     """Lower text and remove punctuation, articles and extra whitespace."""
@@ -31,9 +32,14 @@ def normalize_answer(s):
 
     return white_space_fix(remove_articles(remove_punc(lower(s))))
 
-def exact_match_score(prediction, ground_truth):
-    """Check if the prediction is a (soft) exact match with the ground truth."""
-    return normalize_answer(prediction) == normalize_answer(ground_truth)
+def hits_at_k(preds, ans, k):
+    """accepts list of predictions and answers"""
+
+    preds_k = preds[:k]
+
+    any_in = lambda a, b: bool(set(a).intersection(b))
+
+    return any_in(preds_k, ans)
 
 
 def normalize(text):
@@ -43,17 +49,7 @@ def normalize(text):
 def partition(alist, indices):
     return [alist[i:j] for i, j in zip([0]+indices, indices+[None])]
 
-def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
-    """Given a prediction and multiple valid answers, return the score of
-    the best prediction-answer_n pair given a metric function.
-    """
-    scores_for_ground_truths = []
-    for ground_truth in ground_truths:
-        score = metric_fn(prediction, ground_truth)
-        scores_for_ground_truths.append(score)
-    return max(scores_for_ground_truths)
-
-def evaluate(dataset_file, prediction_file, combine_file):
+def evaluate(dataset_file, prediction_file, combine_file, k):
 
     with open(combine_file) as f:
         combinedata = json.load(f)
@@ -68,26 +64,24 @@ def evaluate(dataset_file, prediction_file, combine_file):
     with open(prediction_file) as f:
         for line in f:
             data = json.loads(line)
-            prediction = normalize(data[0]['span'])
-            predictions.append(prediction)
+            preds = [normalize(d['span']) for d in data]
+            predictions.append(preds)
 
     answerlist = partition(answers, combinedata["linenumbers"])
     predlist = partition(predictions, combinedata["linenumbers"])
 
     for iteration in range(len(answerlist)):
         ans, preds = answerlist[iteration], predlist[iteration]
-        exact_match = 0
+        score = 0
         for i in range(len(preds)):
-            exact_match += metric_max_over_ground_truths(
-                exact_match_score, preds[i], ans[i]
-            )
+            score += hits_at_k(preds[i], ans[i], k)
         total = len(preds)
-        exact_match = 100.0 * exact_match / total
-        logging.info({'Data': combinedata["filenames"][iteration], 'exact_match': exact_match})
+        hitsk = 100.0 * score / total
+        logging.info({'Data': combinedata["filenames"][iteration], 'Hits@{}'.format(k): hitsk})
 
 if __name__ == "__main__":
     
     set_logger("eval.log")
     logging.info(25*"-" + " Evaluation " + 25*"-")
     args = parser.parse_args()
-    evaluate(args.datasetfile, args.predfile, args.combinedata)
+    evaluate(args.datasetfile, args.predfile, args.combinedata, args.k)
