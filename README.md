@@ -34,7 +34,7 @@ The `combine.py` script combines multiple files to make inference using an open-
 
 ## Results (using DrQA)
 
-````
+```
 Squad: 28.52
 Google-RE
 - birth-place: 50.63
