@@ -117,14 +117,14 @@ def main():
         trex_template = json.load(JSON)
 
     trexfilenames = []
-    for _ , _ , fname in os.walk('data/LAMA/TREX'):
+    for _ , _ , fname in os.walk('data/LAMA/TREx'):
         trexfilenames.extend(fname)
 
     relations = [os.path.splitext(os.path.basename(fname))[0] for fname in trexfilenames]
 
     logging.info("Processing LAMA T-REx dataset")
     for relation in relations:
-        filepath = "data/LAMA/TREX/" + relation + ".jsonl"
+        filepath = "data/LAMA/TREx/" + relation + ".jsonl"
         outputpath = "openLAMA/trex/" + relation + ".txt"
         openlama_fill_template(filepath, outputpath, relation, trex_template)
 
