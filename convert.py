@@ -116,7 +116,9 @@ def main():
     with open("templates/trex.json") as JSON:
         trex_template = json.load(JSON)
 
-    (_, _, trexfilenames) = next(os.walk('data/LAMA/TREX'))
+    trexfilenames = []
+    for _ , _ , fname in os.walk('data/LAMA/TREX'):
+        trexfilenames.extend(fname)
 
     relations = [os.path.splitext(os.path.basename(fname))[0] for fname in trexfilenames]
 
