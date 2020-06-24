@@ -34,14 +34,12 @@ The `combine.py` script combines multiple files to make inference using an open-
 
 ## Results (using DrQA)
 
-```
-Squad: 28.52
-Google-RE
-- birth-place: 50.63
-- birth-date: 47.78
-- death-place: 47.65
-T-REx
-- 1-1: 43.01
-- N-1: 25.50
-- N-M: 19.41
-```
+
+| Dataset |  | Hits@1 | Hits@5 | Hits@10 |
+|:------| :------:| :----:| :----:| :----:| 
+| Squad | | 28.52 | 41.31 | 47.87 |
+| Google-RE  | `birth-place` <br> `birth-date` <br> `death-place`  | 50.63 <br> 47.78 <br> 47.78| 68.81 <br> 71.56 <br> 69.32 | 71.91 <br> 75.61 <br> 73.10 |
+| T-REx | `1-1` <br> `N-1` <br> `N-M`  | 41.83 <br> 25.51 <br> 19.11 | 61.79 <br> 45.71 <br> 35.57 | 68.52 <br> 53.41 <br> 42.67 |
+
+
+
