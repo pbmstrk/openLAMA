@@ -1,20 +1,22 @@
 import logging
-from logger.logger import set_logger
-import jsonlines
 import json
 import os.path
+import jsonlines
+from logger.logger import set_logger
+
+
 
 def formatLAMAsquad(path):
 
     """
-    Opens LAMA Squad file and returns dictionary with 
+    Opens LAMA Squad file and returns dictionary with
     questions, targets and ids.
     """
 
     cloze_questions = []
     targets = []
     ids = []
-    
+
     with jsonlines.open(path) as reader:
         for obj in reader:
             cloze_questions.append(obj["masked_sentences"][0])
@@ -23,10 +25,11 @@ def formatLAMAsquad(path):
 
     return {"cq": cloze_questions, "targets": targets, "ids": ids}
 
+
 def formatsquad(path):
 
     """
-    Retrieves squad data and returns a dictionary with ids linked to 
+    Retrieves squad data and returns a dictionary with ids linked to
     questions
     """
 
@@ -41,7 +44,8 @@ def formatsquad(path):
                     squad_questions.append(qa["question"])
                     squad_ids.append(qa["id"])
 
-    return {squad_ids[i]: squad_questions[i] for i in range(len(squad_ids))} 
+    return {squad_ids[i]: squad_questions[i] for i in range(len(squad_ids))}
+
 
 def openlama_squad(lamapath, squadpath, squad_outputh_path):
 
@@ -73,8 +77,9 @@ def get_triples(path, relation):
             sub = item["sub_label"]
             obj = item["obj_label"]
             triples.append((relation, sub, obj))
-    
+
     return triples
+
 
 def openlama_fill_template(path, output_path, relation, template):
 
@@ -98,6 +103,7 @@ def openlama_fill_template(path, output_path, relation, template):
             json.dump(data, outfile)
             outfile.write('\n')
 
+
 def main():
 
     set_logger("convert.log")
@@ -117,7 +123,7 @@ def main():
         trex_template = json.load(JSON)
 
     trexfilenames = []
-    for _ , _ , fname in os.walk('data/LAMA/TREx'):
+    for _, _, fname in os.walk('data/LAMA/TREx'):
         trexfilenames.extend(fname)
 
     relations = [os.path.splitext(os.path.basename(fname))[0] for fname in trexfilenames]
@@ -130,8 +136,4 @@ def main():
 
 
 if __name__ == "__main__":
-    
     main()
-    
-
-
