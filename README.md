@@ -32,13 +32,22 @@ The script `downloaddata.sh` downloads the LAMA dataset as well as part of the S
 The `combine.py` script combines multiple files to make inference using an open-domain QA system easier. `eval.py` can then be used to evaluate the results.
 
 
-## Results (using DrQA)
+## Results 
 
+### DrQA
 
 | Dataset |  | Hits@1 | Hits@5 | Hits@10 |
 |:------| :------:| :----:| :----:| :----:| 
 | Squad | | 28.52 | 41.31 | 47.87 |
 | Google-RE  | `birth-place` <br> `birth-date` <br> `death-place`  | 50.63 <br> 47.78 <br> 47.78| 68.81 <br> 71.56 <br> 69.32 | 71.91 <br> 75.61 <br> 73.10 |
+| T-REx | `1-1` <br> `N-1` <br> `N-M`  | 41.83 <br> 25.51 <br> 19.11 | 61.79 <br> 45.71 <br> 35.57 | 68.52 <br> 53.41 <br> 42.67 |
+
+### ODQA (BM25 + BERTReader)
+
+| Dataset |  | Hits@1 | Hits@5 | Hits@10 |
+|:------| :------:| :----:| :----:| :----:| 
+| Squad | | 42.62 | 64.59 | 70.81 |
+| Google-RE  | `birth-place` <br> `birth-date` <br> `death-place`  | 69.808 <br> 48.18 <br> 28.85| 83.45 <br> 76.03 <br> 53.39 | 85.69 <br> 79.26 <br> 57.70 |
 | T-REx | `1-1` <br> `N-1` <br> `N-M`  | 41.83 <br> 25.51 <br> 19.11 | 61.79 <br> 45.71 <br> 35.57 | 68.52 <br> 53.41 <br> 42.67 |
 
 
