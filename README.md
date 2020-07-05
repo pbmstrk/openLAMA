@@ -47,6 +47,6 @@ The `combine.py` script combines multiple files to make inference using an open-
 | Dataset |  | Hits@1 | Hits@5 | Hits@10 |
 |:------| :------:| :----:| :----:| :----:| 
 | Squad | | 42.62 | 64.59 | 70.81 |
-| Google-RE  | `birth-place` <br> `birth-date` <br> `death-place`  | 69.808 <br> 48.18 <br> 28.85| 83.45 <br> 76.03 <br> 53.39 | 85.69 <br> 79.26 <br> 57.70 |
+| Google-RE  | `birth-place` <br> `birth-date` <br> `death-place`  | 69.81 <br> 48.18 <br> 28.85| 83.45 <br> 76.03 <br> 53.39 | 85.69 <br> 79.26 <br> 57.70 |
 | T-REx | `1-1` <br> `N-1` <br> `N-M`  | 56.24 <br> 22.39 <br> 17.40 | 87.94 <br> 47.89 <br> 39.18 | 91.57 <br> 57.02 <br> 39.18 |
 
