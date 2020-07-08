@@ -11,9 +11,9 @@ parser.add_argument('datasetfile',
                     help="path to files that should be combined")
 parser.add_argument('predfile',
                     help="path to outputfile, path/to/output.txt")
-parser.add_argument('combinedata')
-parser.add_argument('k', type=int,
-                    help="Hits@k")
+parser.add_argument('--combinedata', default = 'combine_data.json')
+parser.add_argument('--k', type=int,
+                    help="Hits@k", default=10)
 
 def normalize_answer(s):
     """Lower text and remove punctuation, articles and extra whitespace."""

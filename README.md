@@ -4,15 +4,16 @@ Code to convert the cloze questions of the [LAMA dataset](https://github.com/fac
 
 ## Details
 
-The LAMA probe is based on various sources:
+We use a subset of the LAMA probe, which is based on various sources:
 
 1. Google-RE (specifically, the relations `birth-place`, `birth-date` and `death-place`)
-2. T-REx 
-3. ConceptNet (not implemented yet)
-4. Squad
+2. T-REx [(Elsahar et al., 2018)](https://www.aclweb.org/anthology/L18-1544/)
+3. Squad [(Rajpurkar et al., 2016)](https://www.aclweb.org/anthology/D16-1264/)
 
-To convert to natural questions, for Squad the original questions from the Squad dataset are taken which correspond to 
-the masked questions in the LAMA probe.  For the other datasets we define templates mapping a triple to a natural question, 
+Converting to natural questions:
+- for Squad the original questions from the Squad dataset are used, which correspond to 
+the masked questions in the LAMA probe.  
+ - for T-REx and Google-RE we define templates mapping a triple to a natural question, 
 see the example below.
 
 ```
@@ -23,13 +24,18 @@ template: "What is the capital of [X]?"
 ## Generating natural questions
 
 ```
-downloaddata.sh
+download.sh
 python convert.py
 ```
 
-The script `downloaddata.sh` downloads the LAMA dataset as well as part of the SQUAD dataset, and creates a folder structure to store the created openLAMA data. `convert.py` uses templates to convert the cloze style questions to natural questions.
+The script `download.sh` downloads the LAMA dataset as well as part of the SQUAD dataset (needed to align questions), and creates a folder structure to store the created openLAMA dataset. The python script `convert.py` uses templates to convert the cloze style questions to natural questions.
 
-The `combine.py` script combines multiple files to make inference using an open-domain QA system easier. `eval.py` can then be used to evaluate the results.
+The `combine.py` script combines multiple files to make prediction using an open-domain QA system easier. `eval.py` can then be used to evaluate the results.
+
+```
+python combine.py filespath outputpath
+python eval.py datasetfile predfile --combine_data --k
+```
 
 
 ## Results 

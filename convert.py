@@ -4,6 +4,11 @@ import os.path
 import jsonlines
 from logger.logger import set_logger
 
+"""
+Script to convert triples (head, relation, tail) to natural questions
+for evaluating open-domian QA system.
+"""
+
 
 
 def formatLAMAsquad(path):
